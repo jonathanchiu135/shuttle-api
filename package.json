@@ -1,7 +1,6 @@
 {
   "name": "shuttle-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,5 +10,10 @@
     "url": "https:github.com/jonathanchiu135/shuttle-api.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0"
+  },
+  "devDependencies": {},
+  "description": ""
 }
