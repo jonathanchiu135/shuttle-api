@@ -1,49 +1,29 @@
-const { resolveSoa } = require("dns");
 const express = require("express");
+const axios = require("axios");
 
 const app = express();
 
-app.post("/", function(req, res) {
-    res.send("Post Request");
-})
+const port = process.env.PORT || 5000;
 
 
+app.get("/", function (req, res) {
+  res.send("Shuttle API");
+});
 
-
-//COPY-PASTE INTERNET CODE!!!!
-const http = require('http');
-var data = '';
-http.get('http://andysbuses.com/Services/JSONPRelay.svc/GetMapVehiclePoints?ApiKey=8882812681', (resp) => {
-
-  // A chunk of data has been recieved.
-  resp.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  information = data;
-
-  // The whole response has been received. Print out the result in the console.
-  resp.on('end', () => {
-    console.log(JSON.parse(data));
-  });
-
-}).on("error", (err) => {
-  console.log("Error: " + err.message);
+app.get("/locations", function (req, res) {
+  axios
+    .get(
+      "http://andysbuses.com/Services/JSONPRelay.svc/GetMapVehiclePoints?ApiKey=8882812681"
+    )
+    .then((dataSent) => {
+      res.send(dataSent.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Error");
+    });
 });
 
 
+app.listen(port, () => console.log('App listening on port 5000.'));
 
-//WHEN YOU OPEN UP THE LOCALHOST 5000 PAGE 
-app.get("/", function(req, res) {   
-    res.send(JSON.parse(data));
-})
-
-
-
-app.listen(5000, () => console.log('App listening on port 5000.'));
-
-/*
-GET, POST requests 
-GET: send the server a get request 
-
-*/
